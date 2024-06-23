@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hapi-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hapi-server
+  template:
+    metadata:
+      labels:
+        app: hapi-server
+    spec:
+      containers:
+        - name: hapi-server
+          image: lloydrivers052/hapi-log-output:0.7
+          ports:
+            - containerPort: 2345
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
