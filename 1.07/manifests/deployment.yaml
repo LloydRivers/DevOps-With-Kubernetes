@@ -1,4 +1,3 @@
-#app one
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,8 +15,6 @@ spec:
       containers:
         - name: hapi-server
           image: lloydrivers052/hapi-log-output:0.7
-          ports:
-            - containerPort: 2345
           resources:
             requests:
               memory: "64Mi"
