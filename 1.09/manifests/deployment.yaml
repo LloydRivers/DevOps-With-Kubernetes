@@ -1,3 +1,4 @@
+#app two
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,8 +16,6 @@ spec:
       containers:
         - name: hapi-server-pinpong
           image: lloydrivers052/hapi-pingpong-app:latest
-          ports:
-            - containerPort: 3000
           resources:
             requests:
               memory: "64Mi"
