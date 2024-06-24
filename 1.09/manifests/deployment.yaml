@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hapi-server-pinpong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hapi-server-pinpong
+  template:
+    metadata:
+      labels:
+        app: hapi-server-pinpong
+    spec:
+      containers:
+        - name: hapi-server-pinpong
+          image: lloydrivers052/hapi-pingpong-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
