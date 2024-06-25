@@ -17,6 +17,9 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Reader app listening on port 3000");
+const PORT = 3000;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`Reader app listening on http://${HOST}:${PORT}`);
 });
