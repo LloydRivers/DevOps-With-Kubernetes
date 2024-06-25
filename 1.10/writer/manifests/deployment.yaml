@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer-reader
+  template:
+    metadata:
+      labels:
+        app: writer-reader
+    spec:
+      volumes: # Define volume
+        - name: shared-data
+          emptyDir: {}
+      containers:
+        - name: writer
+          image: lloydrivers052/writer-app:v1.0
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+          volumeMounts: # Mount volume
+            - name: shared-data
+              mountPath: /usr/src/app/files
+        - name: reader
+          image: lloydrivers052/reader-app:v1.0
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+          volumeMounts: # Mount volume
+            - name: shared-data
+              mountPath: /usr/src/app/files
