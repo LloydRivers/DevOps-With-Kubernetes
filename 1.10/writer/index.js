@@ -19,6 +19,6 @@ const writeTimestamp = () => {
 
 setInterval(writeTimestamp, 5000);
 
-app.listen(3000, () => {
-  console.log("Writer app listening on port 3000");
+app.listen(3001, () => {
+  console.log("Writer app listening on port 3001");
 });
