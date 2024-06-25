@@ -18,6 +18,8 @@ spec:
       containers:
         - name: writer
           image: lloydrivers052/writer-app:v1.0
+          ports:
+            - containerPort: 3001
           resources:
             limits:
               cpu: "0.5"
@@ -27,6 +29,8 @@ spec:
               mountPath: /usr/src/app/files
         - name: reader
           image: lloydrivers052/reader-app:v1.0
+          ports:
+            - containerPort: 3000
           resources:
             limits:
               cpu: "0.5"
