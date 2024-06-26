@@ -1,19 +1,43 @@
-const fs = require("fs");
-const path = require("path");
 const express = require("express");
-const crypto = require("crypto");
+const {
+  readRequestCount,
+  updateRequestCount,
+  readTimestamp,
+  generateHash,
+} = require("./helpers");
+
 const app = express();
-const filePath = path.join("/usr/src/app/files", "timestamp.txt");
 
 app.get("/", (req, res) => {
-  fs.readFile(filePath, "utf8", (err, data) => {
+  readRequestCount((err, requestCount) => {
     if (err) {
-      res.status(500).send("Error reading file");
-      console.error("Error reading file:", err);
+      res.status(500).send("Error reading request count");
+      console.error("Error reading request count:", err);
       return;
     }
-    const hash = crypto.createHash("sha256").update(data).digest("hex");
-    res.send(`Timestamp: ${data}<br>Hash: ${hash}`);
+
+    requestCount += 1;
+
+    updateRequestCount(requestCount, (err) => {
+      if (err) {
+        res.status(500).send("Error writing request count to file");
+        console.error("Error writing request count to file:", err);
+        return;
+      }
+
+      readTimestamp((err, timestampData) => {
+        if (err) {
+          res.status(500).send("Error reading timestamp file");
+          console.error("Error reading timestamp file:", err);
+          return;
+        }
+
+        const hash = generateHash(timestampData);
+        res.send(
+          `Timestamp: ${timestampData}<br>Request Count: ${requestCount}<br>Hash: ${hash}`
+        );
+      });
+    });
   });
 });
 
