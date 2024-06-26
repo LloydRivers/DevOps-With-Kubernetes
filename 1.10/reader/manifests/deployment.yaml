@@ -14,7 +14,8 @@ spec:
     spec:
       volumes: # Define volume
         - name: shared-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: shared-data-pvc
       containers:
         - name: writer
           image: lloydrivers052/writer-app:v1.0
