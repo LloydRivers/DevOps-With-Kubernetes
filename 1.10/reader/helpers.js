@@ -6,9 +6,6 @@ const timestampFilePath = path.join("/usr/src/app/files", "timestamp.txt");
 const requestCountFilePath = path.join("/usr/src/app/files", "requests.txt");
 
 function readRequestCount(callback) {
-  if (!fs.existsSync(requestCountFilePath)) {
-    fs.writeFileSync(requestCountFilePath, "0");
-  }
   fs.readFile(requestCountFilePath, "utf8", (err, data) => {
     if (err) return callback(err);
     let count = 0;
