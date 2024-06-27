@@ -23,6 +23,8 @@ spec:
             - sh
             - -c
             - "echo '0' > /usr/src/app/files/requests.txt"
+            - echo 'Initial Timestamp' > /usr/src/app/files/image-timestamp.txt
+            - touch /usr/src/app/files/image.jpg
           volumeMounts:
             - name: shared-data
               mountPath: /usr/src/app/files

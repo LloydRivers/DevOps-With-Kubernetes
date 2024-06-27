@@ -6,9 +6,12 @@ const {
   generateHash,
 } = require("./helpers");
 
+const { getImage } = require("./cache-helpers");
+
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const data = await getImage();
   readRequestCount((err, requestCount) => {
     if (err) {
       res.status(500).send("Error reading request count");
@@ -33,9 +36,16 @@ app.get("/", (req, res) => {
         }
 
         const hash = generateHash(timestampData);
-        res.send(
-          `Timestamp: ${timestampData}<br>Request Count: ${requestCount}<br>Hash: ${hash}`
-        );
+        const htmlTemplate = `
+        Timestamp: ${timestampData}<br>
+        Request Count: ${requestCount}<br>
+        Hash: ${hash}<br>
+        <img src="data:image/jpeg;base64,${data.toString(
+          "base64"
+        )}" alt="Random Image">
+        
+        `;
+        res.send(htmlTemplate);
       });
     });
   });
