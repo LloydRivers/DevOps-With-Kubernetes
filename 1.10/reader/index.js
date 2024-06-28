@@ -9,6 +9,8 @@ const {
 const { getImage } = require("./cache-helpers");
 
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.get("/", async (req, res) => {
   const data = await getImage();
@@ -36,16 +38,14 @@ app.get("/", async (req, res) => {
         }
 
         const hash = generateHash(timestampData);
-        const htmlTemplate = `
-        Timestamp: ${timestampData}<br>
-        Request Count: ${requestCount}<br>
-        Hash: ${hash}<br>
-        <img src="data:image/jpeg;base64,${data.toString(
-          "base64"
-        )}" alt="Random Image">
-        
-        `;
-        res.send(htmlTemplate);
+
+        res.render("index", {
+          timestamp: timestampData,
+          requestCount: requestCount,
+          hash: hash,
+          imageData: data.toString("base64"),
+          todos: todos,
+        });
       });
     });
   });

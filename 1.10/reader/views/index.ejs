@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Viewer</title>
+  </head>
+  <body>
+    <h1>Image Viewer</h1>
+    <p>Timestamp: <%= timestamp %></p>
+    <p>Request Count: <%= requestCount %></p>
+    <p>Hash: <%= hash %></p>
+    <img src="data:image/jpeg;base64,<%= imageData %>" alt="Random Image" />
+
+    <h2>Todos</h2>
+
+    <input
+      type="text"
+      id="todoInput"
+      maxlength="140"
+      placeholder="Enter your todo here"
+    />
+
+    <button id="sendButton">Send</button>
+    <ul id="todoList">
+      <li>Buy milk</li>
+      <li>Walk the dog</li>
+      <li>Do laundry</li>
+
+      <% todos.forEach(function(todo) { %>
+      <li><%= todo %></li>
+      <% }) %>
+    </ul>
+
+    <script>
+      // This will end up being a POST request to the server (later)
+      function createTodoItem(value) {
+        const li = document.createElement("li");
+        li.textContent = value;
+        return li;
+      }
+
+      function addTodoToList(value) {
+        const list = document.getElementById("todoList");
+        const todoItem = createTodoItem(value);
+        list.appendChild(todoItem);
+      }
+
+      function handleSendButtonClick() {
+        const input = document.getElementById("todoInput");
+        const value = input.value.trim();
+        if (isValidTodoValue(value)) {
+          addTodoToList(value);
+          input.value = "";
+        } else {
+          alert("Todo must be between 1 and 140 characters.");
+        }
+      }
+
+      function isValidTodoValue(value) {
+        return value.length > 0 && value.length <= 140;
+      }
+
+      document
+        .getElementById("sendButton")
+        .addEventListener("click", handleSendButtonClick);
+    </script>
+  </body>
+</html>
