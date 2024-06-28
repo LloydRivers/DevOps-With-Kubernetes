@@ -45,7 +45,6 @@ app.get("/", async (req, res) => {
           requestCount: requestCount,
           hash: hash,
           imageData: data.toString("base64"),
-          todos: todos,
         });
       });
     });
