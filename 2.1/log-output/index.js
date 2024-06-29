@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
   hash.update(timestamp);
   let requestCount = 0;
   try {
-    const response = await axios.get("http://ping-pong-svc:/pingpong");
+    const response = await axios.get("http://ping-pong-svc:2345/pingpong");
     requestCount = response.data;
   } catch (error) {
     console.error(error);
