@@ -9,12 +9,15 @@ app.set("views", path.join(__dirname, "views"));
 
 app.get("/", async (req, res) => {
   const timestamp = new Date().toISOString();
-
   const hash = crypto.createHash("sha256");
   hash.update(timestamp);
-
-  const response = await axios.get("http://ping-pong-svc:/pingpong");
-  const requestCount = response.data;
+  let requestCount = 0;
+  try {
+    const response = await axios.get("http://ping-pong-svc:/pingpong");
+    requestCount = response.data;
+  } catch (error) {
+    console.error(error);
+  }
 
   res.render("index", {
     timestamp,
