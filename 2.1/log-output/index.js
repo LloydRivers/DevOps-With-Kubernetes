@@ -24,9 +24,8 @@ app.get("/", async (req, res) => {
 });
 
 const PORT = 3000;
-// const HOST = "0.0.0.0";
+const HOST = "0.0.0.0";
 
 app.listen(PORT, () => {
-  // console.log(`Reader app listening on http://${HOST}:${PORT}`);
-  console.log(`Reader app listening on port ${PORT}`);
+  console.log(`Reader app listening on http://${HOST}:${PORT}`);
 });
