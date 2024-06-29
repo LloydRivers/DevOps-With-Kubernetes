@@ -10,3 +10,18 @@ spec:
     - port: 2345
       protocol: TCP
       targetPort: 3000
+# I think where they are going with the next part is allowing the pods to communicate with each other.
+
+# They give this example yaml
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: todo-backend-svc
+# spec:
+#   type: ClusterIP
+#   selector:
+#     app: todo-backend
+#   ports:
+#     - port: 2345
+#       protocol: TCP
+#       targetPort: 3000
