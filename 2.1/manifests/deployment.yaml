@@ -12,42 +12,20 @@ spec:
       labels:
         app: writer-reader
     spec:
-      volumes: # Define volume
-        - name: shared-data
-          persistentVolumeClaim:
-            claimName: shared-data-pvc
-      initContainers: # Add initContainers section
-        - name: volume-initializer
-          image: busybox
-          command:
-            - sh
-            - -c
-            - "echo '0' > /usr/src/app/files/requests.txt"
-            - echo 'Initial Timestamp' > /usr/src/app/files/image-timestamp.txt
-            - touch /usr/src/app/files/image.jpg
-          volumeMounts:
-            - name: shared-data
-              mountPath: /usr/src/app/files
       containers:
         - name: writer
-          image: lloydrivers052/writer-app:v1.0
+          image: lloydrivers052/part2.1-ping-pong:latest
           ports:
             - containerPort: 3001
           resources:
             limits:
               cpu: "0.5"
               memory: "512Mi"
-          volumeMounts: # Mount volume
-            - name: shared-data
-              mountPath: /usr/src/app/files
         - name: reader
-          image: lloydrivers052/reader-app:v1.0
+          image: lloydrivers052/part2.1-log-output:latest
           ports:
             - containerPort: 3000
           resources:
             limits:
               cpu: "0.5"
               memory: "512Mi"
-          volumeMounts: # Mount volume
-            - name: shared-data
-              mountPath: /usr/src/app/files
