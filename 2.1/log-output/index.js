@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
   const hash = crypto.createHash("sha256");
   hash.update(timestamp);
 
-  const response = await axios.get("http://localhost:3001/pingpong");
+  const response = await axios.get("http://ping-pong-svc:/pingpong");
   const requestCount = response.data;
 
   res.render("index", {

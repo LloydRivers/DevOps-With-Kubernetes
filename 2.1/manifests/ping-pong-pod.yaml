@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-pong
+  template:
+    metadata:
+      labels:
+        app: ping-pong
+    spec:
+      containers:
+        - name: ping-pong
+          image: lloydrivers052/part2.1-ping-pong:latest
+          ports:
+            - containerPort: 3001
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-pong-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: ping-pong
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3001

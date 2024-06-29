@@ -1,27 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: writer-reader
+  name: log-output
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: writer-reader
+      app: log-output
   template:
     metadata:
       labels:
-        app: writer-reader
+        app: log-output
     spec:
       containers:
-        - name: writer
-          image: lloydrivers052/part2.1-ping-pong:latest
-          ports:
-            - containerPort: 3001
-          resources:
-            limits:
-              cpu: "0.5"
-              memory: "512Mi"
-        - name: reader
+        - name: log-output
           image: lloydrivers052/part2.1-log-output:latest
           ports:
             - containerPort: 3000
@@ -29,3 +21,17 @@ spec:
             limits:
               cpu: "0.5"
               memory: "512Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: log-output-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: log-output
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3000
