@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: writer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: writer-deployment
+  template:
+    metadata:
+      labels:
+        app: writer-deployment
+    spec:
+      containers:
+        - name: writer
+          image: lloydrivers052/writer-app:v1.0
+          ports:
+            - containerPort: 3001
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"

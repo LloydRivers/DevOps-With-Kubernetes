@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Viewer</title>
+  </head>
+  <body>
+    <h1>Image Viewer</h1>
+    <p>Timestamp: <%= timestamp %></p>
+    <p>Request Count: <%= requestCount %></p>
+    <p>Hash: <%= hash %></p>
+    <img src="data:image/jpeg;base64,<%= imageData %>" alt="Random Image" />
+
+    <h2>Todos</h2>
+
+    <form id="todoForm">
+      <input
+        type="text"
+        id="todoInput"
+        maxlength="140"
+        placeholder="Enter your todo here"
+      />
+      <button type="submit">Send</button>
+    </form>
+    <ul id="todoList">
+      <% todos.forEach(todo => { %>
+      <li><%= todo %></li>
+      <% }) %>
+    </ul>
+
+    <script src="index.js"></script>
+  </body>
+</html>
