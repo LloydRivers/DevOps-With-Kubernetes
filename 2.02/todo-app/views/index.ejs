@@ -60,16 +60,13 @@
 
       async function postTodoToBackend(todo) {
         try {
-          const response = await fetch(
-            "http://backend-svc.default.svc.cluster.local:3002/todos",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ todo }),
-            }
-          );
+          const response = await fetch("http://backend-svc:3002/todos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ todo }),
+          });
           const data = await response.json();
           console.log("Posted todo:", data);
           return data;

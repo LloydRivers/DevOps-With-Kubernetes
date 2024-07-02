@@ -7,6 +7,6 @@ spec:
   selector:
     app: backend-deployment
   ports:
-    - port: 3002
+    - port: 2345
       protocol: TCP
       targetPort: 3002
