@@ -48,9 +48,7 @@
 
       async function fetchTodos() {
         try {
-          const response = await fetch(
-            "http://backend-svc.default.svc.cluster.local:3002/todos"
-          );
+          const response = await fetch("http://localhost:8081/todos");
           const todos = await response.json();
           todos.forEach((todo) => addTodoToList(todo));
         } catch (error) {
@@ -60,7 +58,7 @@
 
       async function postTodoToBackend(todo) {
         try {
-          const response = await fetch("http://backend-svc:3002/todos", {
+          const response = await fetch("http://http://localhost:8081/todos", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
