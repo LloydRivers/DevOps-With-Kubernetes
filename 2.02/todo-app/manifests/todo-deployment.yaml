@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-deployment
+  template:
+    metadata:
+      labels:
+        app: todo-deployment
+    spec:
+      volumes:
+        - name: shared-data
+          persistentVolumeClaim:
+            claimName: shared-data-pvc
+      initContainers:
+        - name: volume-initializer
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /usr/src/app/files \
+              && touch /usr/src/app/files/image-timestamp.txt \
+              && echo 'Initial Timestamp' > /usr/src/app/files/image-timestamp.txt \
+              && touch /usr/src/app/files/image.jpg \
+              && touch /usr/src/app/files/requests.txt \
+              && echo '0' > /usr/src/app/files/requests.txt
+          volumeMounts:
+            - name: shared-data
+              mountPath: /usr/src/app/files
+      containers:
+        - name: reader
+          image: lloydrivers052/reader-app:v2.0
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+          volumeMounts:
+            - name: shared-data
+              mountPath: /usr/src/app/files

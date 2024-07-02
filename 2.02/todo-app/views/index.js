@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchTodos() {
   try {
+    // We make the call to the backend service using the service name
     const response = await axios.get("http://backend-svc:3002/todos");
     const todos = response.data;
+    // We iterate over the todos and add them to the list
     todos.forEach((todo) => addTodoToList(todo));
   } catch (error) {
     console.error("Error fetching todos:", error);
