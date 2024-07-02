@@ -6,11 +6,11 @@ app.use(express.json());
 
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
 
-app.get("/todos", (req, res) => {
+app.get("/", (req, res) => {
   res.json(todos);
 });
 
-app.post("/todos", (req, res) => {
+app.post("/", (req, res) => {
   const todo = req.body.todo;
   if (todo && todo.length > 0 && todo.length <= 140) {
     todos.push(todo);
