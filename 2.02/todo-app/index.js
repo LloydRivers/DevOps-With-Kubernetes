@@ -52,15 +52,15 @@ app.get("/", async (req, res) => {
   });
 });
 
-// app.get("/todos", async (req, res) => {
-//   try {
-//     const response = await axios.get("backend-svc:2345/todos");
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error("Error fetching todos:", error);
-//     res.status(500).json({ error: "Error fetching todos" });
-//   }
-// });
+app.get("/todos", async (req, res) => {
+  try {
+    const response = await axios.get("backend-svc:2345/todos");
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    res.status(500).json({ error: "Error fetching todos" });
+  }
+});
 
 // app.post("/todos", async (req, res) => {
 //   try {
