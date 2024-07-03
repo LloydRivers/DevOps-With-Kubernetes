@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const path = require("path");
 const {
   readRequestCount,
@@ -14,6 +15,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.get("/", async (req, res) => {
+  const response = await axios.get("backend-svc:3002/todos");
+  console.log(response);
+
   const data = await getImage();
   readRequestCount((err, requestCount) => {
     if (err) {
