@@ -21,3 +21,17 @@ spec:
             limits:
               cpu: "0.5"
               memory: "512Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: backend-deployment
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3002

@@ -44,3 +44,17 @@ spec:
           volumeMounts:
             - name: shared-data
               mountPath: /usr/src/app/files
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: todo-deployment
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3000

@@ -14,11 +14,7 @@
 
     <h2>Todos</h2>
 
-    <ul id="todoList">
-      <% todos.forEach(todo => { %>
-      <li><%= todo %></li>
-      <% }); %>
-    </ul>
+    <ul id="todoList"></ul>
 
     <form id="todoForm" action="/postTodo" method="POST">
       <input
@@ -31,5 +27,14 @@
       />
       <button type="submit">Send</button>
     </form>
+    <script>
+      const data = async () => {
+        const response = await fetch("http://localhost:8081/todos");
+        const data = await response.json();
+        console.log(data);
+      };
+
+      data();
+    </script>
   </body>
 </html>
