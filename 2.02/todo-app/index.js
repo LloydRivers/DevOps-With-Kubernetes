@@ -14,15 +14,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-/*
-Here is what i think might happen: person open the browser on 8081 => 80(lb) => 3000 
-Route hndler below activated.
-It makes a request OUTSIDE the cluster "http://localhost:8081/todos"
-Then ingress file is waiting for requests for /todos
-*/
 app.get("/", async (req, res) => {
-  // const response = await axios.get("http://localhost:8081/todos");
-
   const data = await getImage();
   readRequestCount((err, requestCount) => {
     if (err) {
@@ -60,15 +52,15 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.get("/todos", async (req, res) => {
-  try {
-    const response = await axios.get("backend-svc:3002/todos");
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching todos:", error);
-    res.status(500).json({ error: "Error fetching todos" });
-  }
-});
+// app.get("/todos", async (req, res) => {
+//   try {
+//     const response = await axios.get("backend-svc:2345/todos");
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error("Error fetching todos:", error);
+//     res.status(500).json({ error: "Error fetching todos" });
+//   }
+// });
 
 // app.post("/todos", async (req, res) => {
 //   try {

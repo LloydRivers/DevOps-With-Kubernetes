@@ -29,9 +29,8 @@
     </form>
     <script>
       const data = async () => {
-        const response = await fetch("http://localhost:8081/todos");
+        const response = await fetch("http://backend-svc:2345/todos");
         const data = await response.json();
-        console.log(data);
       };
 
       data();
