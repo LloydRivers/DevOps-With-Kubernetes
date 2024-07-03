@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchTodos() {
   try {
     // We make the call to the backend service using the service name
-    const response = await axios.get("http://backend-svc:3002/todos");
+    const response = await axios.get("localhost:8081/todos");
     const todos = response.data;
     // We iterate over the todos and add them to the list
     todos.forEach((todo) => addTodoToList(todo));
@@ -34,7 +34,7 @@ async function fetchTodos() {
 
 async function postTodoToBackend(todo) {
   try {
-    const data = await axios.post("http://backend-svc:3002/todos", { todo });
+    const data = await axios.post("localhost:8081/todos", { todo });
     console.log("Posted todo:", data);
     return data;
   } catch (error) {
