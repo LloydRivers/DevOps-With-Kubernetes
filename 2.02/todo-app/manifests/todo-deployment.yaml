@@ -34,7 +34,7 @@ spec:
               mountPath: /usr/src/app/files
       containers:
         - name: reader
-          image: djblackett/lr-frontend:v.10
+          image: lloydrivers052/reader-app:v2.0
           ports:
             - containerPort: 3000
           resources:

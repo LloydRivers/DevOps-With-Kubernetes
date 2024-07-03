@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: djblackett/backend:v0.4
+          image: lloydrivers052/todo-backend:v1.0
           ports:
             - containerPort: 3002
           resources:
