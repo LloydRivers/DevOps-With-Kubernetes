@@ -57,13 +57,7 @@ app.get("/todos", async (req, res) => {
   try {
     const response = await axios.get("http://backend-svc:2345/todos");
     const todos = await response.data;
-    res.render("index", {
-      timestamp: null, // Placeholder
-      requestCount: null, // Placeholder
-      hash: null, // Placeholder
-      imageData: null, // Placeholder
-      todos: todos,
-    });
+    res.send(todos);
   } catch (error) {
     res.status(500).json({ error: "Error fetching todos" });
   }
