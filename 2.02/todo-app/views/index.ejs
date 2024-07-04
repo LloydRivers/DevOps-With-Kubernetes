@@ -14,7 +14,14 @@
 
     <h2>Todos</h2>
 
-    <ul id="todoList"></ul>
+    <ul id="todoList">
+      <% if (todos && todos.length > 0) { %> <% todos.forEach(function(todo) {
+      %>
+      <li><%= todo %></li>
+      <% }); %> <% } else { %>
+      <li>No todos found</li>
+      <% } %>
+    </ul>
 
     <form id="todoForm" action="/postTodo" method="POST">
       <input

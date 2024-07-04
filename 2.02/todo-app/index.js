@@ -46,6 +46,7 @@ app.get("/", async (req, res) => {
           requestCount: requestCount,
           hash: hash,
           imageData: data.toString("base64"),
+          todos: [],
         });
       });
     });
@@ -55,27 +56,31 @@ app.get("/", async (req, res) => {
 app.get("/todos", async (req, res) => {
   try {
     const response = await axios.get("http://backend-svc:2345/todos");
-    res.json(response.data);
+    const todos = await response.data;
+    res.render("index", {
+      timestamp: null, // Placeholder
+      requestCount: null, // Placeholder
+      hash: null, // Placeholder
+      imageData: null, // Placeholder
+      todos: todos,
+    });
   } catch (error) {
-    console.error("Error fetching todos:", error);
     res.status(500).json({ error: "Error fetching todos" });
   }
 });
 
-// app.post("/todos", async (req, res) => {
-//   try {
-//     const response = await axios.post(
-//       "http://backend-svc:2345/todos",
-//       req.body
-//     );
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error("Error creating todo:", error);
-//     res.status(500).json({ error: "Error creating todo" });
-//   }
-// });
-
-// I have a horrible feeling that we need the get todos and posts todos here. These hndlers call the backedj service.
+app.post("/todos", async (req, res) => {
+  try {
+    const response = await axios.post(
+      "http://backend-svc:2345/todos",
+      req.body
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error creating todo:", error);
+    res.status(500).json({ error: "Error creating todo" });
+  }
+});
 
 const PORT = 3000;
 const HOST = "0.0.0.0";

@@ -6,10 +6,20 @@ const port = 3002;
 app.use(express.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.locals.timestamp = "";
+  res.locals.requestCount = "";
+  res.locals.hash = "";
+  res.locals.imageData = "";
+  res.locals.todos = [];
+  next();
+});
+
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
 
 app.get("/todos", (req, res) => {
-  res.json(todos);
+  console.log("Requesting todos from the backend service");
+  res.status(200).json(todos);
 });
 
 app.post("/todos", (req, res) => {
