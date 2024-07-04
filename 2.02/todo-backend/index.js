@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const port = 3002;
 
 app.use(express.json());
+app.use(cors());
 
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
 
