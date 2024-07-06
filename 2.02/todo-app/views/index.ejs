@@ -14,16 +14,9 @@
 
     <h2>Todos</h2>
 
-    <ul id="todoList">
-      <% if (todos && todos.length > 0) { %> <% todos.forEach(function(todo) {
-      %>
-      <li><%= todo %></li>
-      <% }); %> <% } else { %>
-      <li>No todos found</li>
-      <% } %>
-    </ul>
+    <ul id="todoList"></ul>
 
-    <form id="todoForm" action="/postTodo" method="POST">
+    <form id="todoForm">
       <input
         type="text"
         id="todoInput"
@@ -34,20 +27,9 @@
       />
       <button type="submit">Send</button>
     </form>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"
-    >
-      import axios from "axios";
-
-      console.log("?Am I even loading right now?");
-
-      // We know we hasve the data in the dserver bevause we have logged it.
-
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // html page loads up, we call the fetchTodos function
-        console.log("calling the fetchTodos function");
-        fetchTodos();
-
+        console.log("Document loaded, executing JavaScript.");
         document
           .getElementById("todoForm")
           .addEventListener("submit", async (event) => {
@@ -63,26 +45,41 @@
               alert("Todo must be between 1 and 140 characters.");
             }
           });
+
+        fetchTodos();
       });
+
+      // chrome browswer 8081 -> 80 (lb) -> ingress looks for /todos -> backend-svc -> pod
 
       async function fetchTodos() {
         try {
-          // We make the call to the backend service using the service name. This is the only part I am worried about. I am unsure which endpoint to hit.
-          console.log("fetching todos FE");
-          const response = await axios.get("localhost:8081/todos");
-          const todos = response.data;
-          console.log("todos", todos);
-          // We iterate over the todos and add them to the list
+          const response = await fetch("http://localhost:8081/todos");
+          console.log("response", response);
+          if (!response.ok) {
+            throw new Error("Failed to fetch todos");
+          }
+          const todos = await response.json();
           todos.forEach((todo) => addTodoToList(todo));
         } catch (error) {
           console.error("Error fetching todos:", error);
         }
       }
-
+      // This handles todos posted from the chrome browser. It is meant to make a request to http://localhost:8081/todos (I think)
       async function postTodoToBackend(todo) {
+        console.log("The todo you are sending is ", todo);
         try {
-          const data = await axios.post("localhost:8081/todos", { todo });
-          console.log("Posted todo:", data);
+          const response = await fetch("http://localhost:8081/todos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ todo }),
+          });
+          console.log("response", response);
+          if (!response.ok) {
+            throw new Error("Failed to post todo");
+          }
+          const data = await response.json();
           return data;
         } catch (error) {
           console.error("Error posting todo:", error);

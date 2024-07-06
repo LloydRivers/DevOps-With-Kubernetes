@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = 3002;
 
@@ -23,9 +24,16 @@ app.get("/todos", (req, res) => {
 });
 
 app.post("/todos", (req, res) => {
-  const todo = req.body.todo;
+  console.log("Adding a new todo to the backend service");
+  console.log(req.body); // Logging the entire request body to inspect what is received I get an empty object
+  console.log("Here is rthe full reuqest object", req); // Logging the entire request object to inspect what is received (I get a lot of information here)
+
+  // Hardcoding a value to test the server response
+  const todo = "Test Todo"; // Replace with a hardcoded string
+
   if (todo && todo.length > 0 && todo.length <= 140) {
     todos.push(todo);
+    console.log(todos); // Logging the todos array to inspect the new todo added
     res.status(201).json({ message: "Todo added successfully" });
   } else {
     res.status(400).json({ message: "Invalid todo" });
