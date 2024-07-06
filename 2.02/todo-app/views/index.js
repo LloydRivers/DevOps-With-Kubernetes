@@ -1,6 +1,9 @@
 import axios from "axios";
 
+// We know we hasve the data in the dserver bevause we have logged it.
+
 document.addEventListener("DOMContentLoaded", () => {
+  // html page loads up, we call the fetchTodos function
   fetchTodos();
 
   document
