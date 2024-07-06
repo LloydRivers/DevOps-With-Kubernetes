@@ -1,9 +1,12 @@
 import axios from "axios";
 
+console.log("?Am I even loading right now?");
+
 // We know we hasve the data in the dserver bevause we have logged it.
 
 document.addEventListener("DOMContentLoaded", () => {
   // html page loads up, we call the fetchTodos function
+  console.log("calling the fetchTodos function");
   fetchTodos();
 
   document
@@ -25,9 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchTodos() {
   try {
-    // We make the call to the backend service using the service name
+    // We make the call to the backend service using the service name. This is the only part I am worried about. I am unsure which endpoint to hit.
+    console.log("fetching todos FE");
     const response = await axios.get("localhost:8081/todos");
     const todos = response.data;
+    console.log("todos", todos);
     // We iterate over the todos and add them to the list
     todos.forEach((todo) => addTodoToList(todo));
   } catch (error) {
