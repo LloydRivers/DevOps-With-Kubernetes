@@ -53,7 +53,7 @@
 
       async function fetchTodos() {
         try {
-          const response = await fetch("http://localhost:8081/todos");
+          const response = await fetch("http://localhost:3002/todos");
           console.log("response", response);
           if (!response.ok) {
             throw new Error("Failed to fetch todos");
@@ -68,7 +68,7 @@
       async function postTodoToBackend(todo) {
         console.log("The todo you are sending is ", todo);
         try {
-          const response = await fetch("http://localhost:8081/todos", {
+          const response = await fetch("http://localhost:3002/todos", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
