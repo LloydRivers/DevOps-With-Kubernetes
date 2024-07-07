@@ -53,7 +53,7 @@
 
       async function fetchTodos() {
         try {
-          const response = await fetch("http://localhost:3002/todos");
+          const response = await fetch("http://localhost:8081/todos");
           console.log("response", response);
           if (!response.ok) {
             throw new Error("Failed to fetch todos");
@@ -64,16 +64,16 @@
           console.error("Error fetching todos:", error);
         }
       }
-      // This handles todos posted from the chrome browser. It is meant to make a request to http://localhost:8081/todos (I think)
+
       async function postTodoToBackend(todo) {
         console.log("The todo you are sending is ", todo);
         try {
-          const response = await fetch("http://localhost:3002/todos", {
+          const response = await fetch("http://localhost:8081/todos", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ todo }),
+            body: JSON.stringify({ todo: todo }),
           });
           console.log("response", response);
           if (!response.ok) {

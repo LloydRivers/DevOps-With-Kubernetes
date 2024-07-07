@@ -28,8 +28,7 @@ app.post("/todos", (req, res) => {
   console.log(req.body); // Logging the entire request body to inspect what is received I get an empty object
   console.log("Here is rthe full reuqest object", req); // Logging the entire request object to inspect what is received (I get a lot of information here)
 
-  // Hardcoding a value to test the server response
-  const todo = "Test Todo"; // Replace with a hardcoded string
+  const todo = req.body.todo;
 
   if (todo && todo.length > 0 && todo.length <= 140) {
     todos.push(todo);
