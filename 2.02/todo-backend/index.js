@@ -6,14 +6,14 @@ const port = 3002;
 app.use(express.json());
 app.use(cors());
 
-app.use((req, res, next) => {
-  res.locals.timestamp = "";
-  res.locals.requestCount = "";
-  res.locals.hash = "";
-  res.locals.imageData = "";
-  res.locals.todos = [];
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.timestamp = "";
+//   res.locals.requestCount = "";
+//   res.locals.hash = "";
+//   res.locals.imageData = "";
+//   res.locals.todos = [];
+//   next();
+// });
 
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
 
@@ -23,23 +23,27 @@ app.get("/todos", (req, res) => {
 });
 
 app.post("/todos", (req, res) => {
-  console.log("Adding a new todo to the backend service");
-  console.log(req.body); // Logging the entire request body to inspect what is received I get an empty object
-  console.log("______________");
-  console.log("______________");
-  console.log("______________");
-  console.log("______________");
-  console.log("Here is the full reuqest object", req); // Logging the entire request object to inspect what is received (I get a lot of information here)
+  try {
+    console.log("Adding a new todo to the backend service");
 
-  const todo = req.body.todo;
+    // Log relevant request details for debugging
+    console.log("Request headers:", req.headers);
+    console.log("Content-Type header:", req.headers["content-type"]);
+    console.log("req.body:", req.body); // Existing log
 
-  if (todo && todo.length > 0 && todo.length <= 140) {
-    console.log("The array before the new todo is added", todos); // Logging the todos array to inspect the current todos
-    todos.push(todo);
-    console.log(todos); // Logging the todos array to inspect the new todo added
-    res.status(201).json({ message: "Todo added successfully" });
-  } else {
-    res.status(400).json({ message: "Invalid todo" });
+    const todo = req.body.todo;
+
+    if (todo && todo.length > 0 && todo.length <= 140) {
+      console.log("The array before the new todo is added", todos); // Existing log
+      todos.push(todo);
+      console.log(todos); // Existing log
+      res.status(201).json({ message: "Todo added successfully" });
+    } else {
+      res.status(400).json({ message: "Invalid todo" });
+    }
+  } catch (error) {
+    console.error("Error processing POST request:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
