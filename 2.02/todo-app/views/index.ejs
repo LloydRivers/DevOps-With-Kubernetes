@@ -66,9 +66,15 @@
       async function postTodoToBackend(todo) {
         console.log("The todo you are sending is ", todo);
         try {
-          const response = await axios.post("http://localhost:8081/todos", {
-            todo: todo,
-          });
+          const response = await axios.post(
+            "http://localhost:8081/todos",
+            JSON.stringify({ todo: todo }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
           console.log("response", response);
           const data = response.data;
           return data;

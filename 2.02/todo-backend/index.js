@@ -5,15 +5,20 @@ const port = 3002;
 
 app.use(express.json());
 app.use(cors());
+app.use(parseJsonBody);
 
-// app.use((req, res, next) => {
-//   res.locals.timestamp = "";
-//   res.locals.requestCount = "";
-//   res.locals.hash = "";
-//   res.locals.imageData = "";
-//   res.locals.todos = [];
-//   next();
-// });
+function parseJsonBody(req, res, next) {
+  if (req.headers["content-type"] === "application/x-www-form-urlencoded") {
+    try {
+      // Assuming the body is URL-encoded, parse it to JSON
+      req.body = JSON.parse(JSON.stringify(req.body));
+    } catch (error) {
+      console.error("Error parsing URL-encoded body to JSON:", error);
+      return res.status(400).json({ message: "Invalid request format" });
+    }
+  }
+  next(); // Pass control to the next middleware or route handler
+}
 
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
 
@@ -22,7 +27,7 @@ app.get("/todos", (req, res) => {
   res.status(200).json(todos);
 });
 
-app.post("/todos", (req, res) => {
+app.post("/todos", (req, parseJsonBody, res) => {
   try {
     console.log("Adding a new todo to the backend service");
 
