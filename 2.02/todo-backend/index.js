@@ -7,6 +7,12 @@ app.use(express.json());
 app.use(cors());
 app.use(parseJsonBody);
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 function parseJsonBody(req, res, next) {
   if (req.headers["content-type"] === "application/x-www-form-urlencoded") {
     try {
