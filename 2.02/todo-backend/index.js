@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3002;
@@ -27,12 +28,13 @@ function parseJsonBody(req, res, next) {
 }
 
 let todos = ["Learn Node.js", "Learn Express.js", "Learn MongoDB"];
-
+// 8081 working
 app.get("/todos", (req, res) => {
   console.log("Requesting todos from the backend service");
   res.status(200).json(todos);
 });
-
+// I have no ide why but the req.body = {} is not working, it is always empty
+// 8081 => 80 => ingress => srrvice => pod
 app.post("/todos", (req, res) => {
   console.log("/post route activated");
   try {
@@ -42,7 +44,6 @@ app.post("/todos", (req, res) => {
     console.log("Request headers:", req.headers);
     console.log("Content-Type header:", req.headers["content-type"]);
     console.log("req.body:", req.body); // Existing log
-
     const todo = req.body.todo;
 
     if (todo && todo.length > 0 && todo.length <= 140) {
