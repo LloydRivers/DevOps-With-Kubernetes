@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: writer-deployment
+  namespace: practice # This is the namespace where the deployment is created
 spec:
   replicas: 1
   selector:

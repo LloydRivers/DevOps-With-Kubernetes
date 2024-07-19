@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: todo-ingress
+  namespace: practice # This is the namespace where the ingress is created
 spec:
   rules:
     - http:
